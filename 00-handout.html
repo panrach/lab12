@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      xml:lang="en"
+>
+<head>
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+<title>CSCB09 Week 12 Lab</title>
+<style type="text/css">
+h1, h2, h3 { color: blue; }
+dfn { font-style: normal; font-weight: bold; color: blue; }
+table { border-collapse: collapse; }
+th, td { border: 1px solid grey; padding: 0.2em 0.5em; }
+
+/* Code excerpts from loadable source files. */
+div.excerpt {
+  margin: 1em 0em 1em; /* top, left/right, bottom */
+}
+div.excerpt > span {
+  font-size: smaller;
+  background-color: #f0f0f0;
+  padding: 0.25em;
+}
+div.excerpt > pre {
+  background-color: #f0f0f0;
+  overflow: auto;
+  padding: 0.5em;
+  margin: 0px;
+}
+
+/* popup hidable table of contents, and the button to pop it up. */
+#tocdyn {
+  position: fixed;
+  width: 15em;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  border-left: blue solid 1px;
+  border-bottom: blue solid 1px;
+  background-color: white;
+  color: black;
+  font-family: sans-serif;
+  visibility: hidden; /* initial value, to be overruled by javascript */
+}
+#tocbutton {
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: 0.9;
+}
+#tocdyn > h1 {
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 0;
+}
+#tocdyn * {
+  text-align: left;
+}
+#tocdyn ul {
+  list-style-type: none;
+}
+#tocdyn > ul {
+  padding-left: 0;
+}
+#tocdyn > ul ul {
+  padding-left: 1em;
+}
+#tocdyn li {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+ul.task-list{list-style: none;}
+</style>
+<script type="text/javascript">
+function show_toc() {
+  document.getElementById("tocdyn").style.visibility = "visible";
+}
+function hide_toc() {
+  document.getElementById("tocdyn").style.visibility = "";
+}
+</script>
+</head>
+<body id="top">
+<header class="title">
+<h1 class="title">CSCB09 Week 12 Lab</h1>
+</header>
+<div id="tocbutton"><button type="button" onclick="show_toc();">Table of Contents</button></div>
+<nav id="tocdyn" role="doc-toc" onclick="hide_toc();">
+<p><a href="#top">Top</a></p>
+<ul>
+<li><a href="#task">Task</a></li>
+<li><a href="#debugging-and-error-messages">Debugging And Error
+Messages</a></li>
+<li><a href="#handing-in">Handing In</a></li>
+</ul>
+</nav>
+<p>In this lab, you will use <code>select()</code> to complete a simple
+version of <code>nc</code> in client mode!</p>
+<h2 id="task">Task</h2>
+<p>The program should take 2 command line arguments: dot-notation IP
+address and port to connect to. The starter code babync.c has already
+done this and opened a connection.</p>
+<p>Then it should use a <code>select()</code> loop to perform:</p>
+<ul>
+<li><p>Whenever stdin has data, write it to the socket.</p>
+<p>(To keep this lab short, we assume that sending to the socket is
+successful, complete, and does not block. Ideally, we should toggle
+between two states: monitor stdin for reading but don’t write to the
+socket; monitor the socket for writing but don’t monitor stdin until the
+writing is complete.)</p></li>
+<li><p>Whenever the socket has data, write it to stdout.</p>
+<p>(To keep this lab short, we assume that writing to stdout is
+successful, complete, and does not block. Similar to the
+above.)</p></li>
+</ul>
+<p>Do not exit until both stdin and the socket are EOF when reading.</p>
+<p>Do not monitor an FD for reading if it reached EOF in the past, lest
+you would cause busy-polling. (Why?)</p>
+<p>Please consult the Testing Tips section in Assignment 4 for testing
+tips.</p>
+<p>You should also use redirection to test for data corruption.
+Example:</p>
+<ul>
+<li><p>Server side:</p>
+<pre><code>nc -v -n -q 1 -l PORT &lt; IN1 &gt; OUT2</code></pre></li>
+<li><p>Client side:</p>
+<pre><code>./a.out DOTADDRESS PORT &lt; IN2 &gt; OUT1</code></pre></li>
+</ul>
+<p>Then IN1 and OUT1 should be identical, IN2 and OUT2 should be
+identical.</p>
+<h2 id="debugging-and-error-messages">Debugging And Error Messages</h2>
+<p>If you like to print debugging or error messages for your own sake,
+please send them to stderr only.</p>
+<h2 id="handing-in">Handing In</h2>
+<p>The code file babync.c.</p>
+</body>
+</html>
